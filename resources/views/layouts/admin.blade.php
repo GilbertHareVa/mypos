@@ -20,6 +20,8 @@
                 <a href="/admin/dashboard" class="block px-4 py-3 bg-[#5c3d1e] text-white rounded-lg font-medium">📊 Dashboard</a>
                 <a href="/admin/menus" class="block px-4 py-3 text-gray-600 hover:bg-[#f5deb3] hover:text-[#5c3d1e] rounded-lg font-medium transition">🍔 Data Menu</a>
                 <a href="/admin/transactions" class="block px-4 py-3 text-gray-600 hover:bg-[#f5deb3] hover:text-[#5c3d1e] rounded-lg font-medium transition">📝 Transaksi</a>
+                <a href="/admin/users" class="block px-4 py-3 text-gray-600 hover:bg-[#f5deb3] hover:text-[#5c3d1e] rounded-lg font-medium transition">👥 Data Karyawan</a>
+                <a href="/admin/ingredients" class="block px-4 py-3 text-gray-600 hover:bg-[#f5deb3] hover:text-[#5c3d1e] rounded-lg font-medium transition">📦 Stok Bahan</a>
             </nav>
         </div>
         

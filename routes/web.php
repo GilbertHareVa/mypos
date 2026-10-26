@@ -20,6 +20,10 @@ Route::get('/admin/dashboard', [\App\Http\Controllers\DashboardController::class
     Route::get('/admin/transactions', [\App\Http\Controllers\TransactionController::class, 'index'])->name('transactions.index');
     // Halaman Data Menu
     Route::get('/admin/menus', [\App\Http\Controllers\MenuController::class, 'index'])->name('menus.index');
+    // Halaman Data Karyawan (Users)
+    Route::get('/admin/users', [\App\Http\Controllers\UserController::class, 'index'])->name('users.index');
+    // Halaman Data Bahan Baku (Inventory)
+    Route::get('/admin/ingredients', [\App\Http\Controllers\IngredientController::class, 'index'])->name('ingredients.index');
     // Halaman POS Kasir
 Route::get('/pos', [\App\Http\Controllers\PosController::class, 'index'])->name('pos.index');
 // Halaman POS Kasir
