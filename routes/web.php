@@ -4,9 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 
 // Rute untuk halaman utama (sementara kita buat teks sederhana dulu)
-Route::get('/', function () {
-    return 'Ini akan jadi Halaman Landing Page MyPOS nanti. Silakan tambahkan /login di URL untuk masuk.';
-});
+Route::get('/', [\App\Http\Controllers\LandingController::class, 'index']);
 
 // Rute untuk Halaman Login
 Route::get('/login', [AuthController::class, 'login'])->name('auth.login');
@@ -18,7 +16,10 @@ Route::middleware(['auth'])->group(function () {
     // Halaman Dashboard Admin
    // Halaman Dashboard Admin
 Route::get('/admin/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('admin.dashboard');
-    // Halaman POS Kasir
+// Halaman Data Transaksi
+    Route::get('/admin/transactions', [\App\Http\Controllers\TransactionController::class, 'index'])->name('transactions.index');
+    // Halaman Data Menu
+    Route::get('/admin/menus', [\App\Http\Controllers\MenuController::class, 'index'])->name('menus.index');
     // Halaman POS Kasir
 Route::get('/pos', [\App\Http\Controllers\PosController::class, 'index'])->name('pos.index');
 // Halaman POS Kasir
