@@ -8,10 +8,14 @@
     <div class="flex justify-between items-center mb-6">
         <h3 class="text-lg font-bold text-gray-800">Daftar Menu Tersedia</h3>
         <!-- Tombol Tambah (Fungsinya akan kita buat nanti) -->
-        <button class="bg-[#5c3d1e] text-white px-4 py-2 rounded-lg font-medium hover:bg-[#4a3118] transition">
-            + Tambah Menu Baru
+        <a href="{{ route('menus.create') }}" class="bg-[#5c3d1e] text-white px-4 py-2 rounded-lg font-medium hover:bg-[#4a3118] transition inline-block"> + Tambah Menu Baru </a>
         </button>
     </div>
+    @if(session('success'))
+        <div class="bg-green-100 text-green-700 p-3 rounded-lg mb-4 font-medium border border-green-200">
+            {{ session('success') }}
+        </div>
+    @endif
 
     <div class="overflow-x-auto">
         <table class="w-full text-sm text-left">
@@ -47,10 +51,14 @@
                             <span class="bg-red-100 text-red-700 px-2 py-1 rounded font-bold text-xs">Habis</span>
                         @endif
                     </td>
-                    <td class="py-3 px-4">
-                        <button class="text-blue-600 hover:underline mr-2">Edit</button>
-                        <button class="text-red-600 hover:underline">Hapus</button>
-                    </td>
+                    <<td class="py-3 px-4 flex gap-3">
+    <a href="{{ route('menus.edit', $menu->id) }}" class="text-blue-600 hover:underline font-medium">Edit</a>
+    <form action="{{ route('menus.destroy', $menu->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus menu {{ $menu->name }}?');">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="text-red-600 hover:underline font-medium">Hapus</button>
+    </form>
+</td>
                 </tr>
                 @endforeach
             </tbody>
