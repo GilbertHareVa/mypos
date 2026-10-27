@@ -53,7 +53,7 @@ class IngredientSeeder extends Seeder
             ],
             [
                 'supplier_id' => $supplierId,
-                'name' => 'Cup Plastik + Sablon MyPOS',
+                'name' => 'Cup Plastik + Sablon SeashellKitchen',
                 'stock' => 150, 
                 'min_stock' => 300, // Sengaja dibuat di bawah batas minimal
                 'unit' => 'Pcs',

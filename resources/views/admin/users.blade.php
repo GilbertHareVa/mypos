@@ -7,10 +7,22 @@
     
     <div class="flex justify-between items-center mb-6">
         <h3 class="text-lg font-bold text-gray-800">Daftar Akun Sistem</h3>
-        <button class="bg-[#5c3d1e] text-white px-4 py-2 rounded-lg font-medium hover:bg-[#4a3118] transition">
+        <a href="{{ route('users.create') }}" class="bg-[#5c3d1e] text-white px-4 py-2 rounded-lg font-medium hover:bg-[#4a3118] transition inline-block">
             + Tambah Kasir Baru
-        </button>
+        </a>
     </div>
+
+    @if(session('success'))
+        <div class="bg-green-100 text-green-700 p-3 rounded-lg mb-4 font-medium border border-green-200">
+            {{ session('success') }}
+        </div>
+    @endif
+    
+    @if(session('error'))
+        <div class="bg-red-100 text-red-700 p-3 rounded-lg mb-4 font-medium border border-red-200">
+            {{ session('error') }}
+        </div>
+    @endif
 
     <div class="overflow-x-auto">
         <table class="w-full text-sm text-left">
@@ -42,10 +54,14 @@
                             <span class="bg-red-100 text-red-700 px-2 py-1 rounded font-bold text-xs">Nonaktif</span>
                         @endif
                     </td>
-                    <td class="py-3 px-4">
-                        <button class="text-blue-600 hover:underline mr-2">Edit</button>
+                    <td class="py-3 px-4 flex gap-3">
+                        <button class="text-blue-600 hover:underline font-medium">Edit</button>
                         @if($user->id !== auth()->id())
-                            <button class="text-red-600 hover:underline">Hapus</button>
+                            <form action="{{ route('users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus akun {{ $user->name }}? Akses loginnya akan dicabut.');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-red-600 hover:underline font-medium">Hapus</button>
+                            </form>
                         @endif
                     </td>
                 </tr>

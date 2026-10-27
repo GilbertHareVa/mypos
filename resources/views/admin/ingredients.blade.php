@@ -7,10 +7,16 @@
     
     <div class="flex justify-between items-center mb-6">
         <h3 class="text-lg font-bold text-gray-800">Pemantauan Stok Gudang</h3>
-        <button class="bg-[#5c3d1e] text-white px-4 py-2 rounded-lg font-medium hover:bg-[#4a3118] transition">
+        <a href="{{ route('ingredients.create') }}" class="bg-[#5c3d1e] text-white px-4 py-2 rounded-lg font-medium hover:bg-[#4a3118] transition inline-block">
             + Tambah Bahan
-        </button>
+        </a>
     </div>
+
+    @if(session('success'))
+        <div class="bg-green-100 text-green-700 p-3 rounded-lg mb-4 font-medium border border-green-200">
+            {{ session('success') }}
+        </div>
+    @endif
 
     <div class="overflow-x-auto">
         <table class="w-full text-sm text-left">
@@ -22,6 +28,7 @@
                     <th class="py-3 px-4">Harga Beli / Unit</th>
                     <th class="py-3 px-4">Supplier</th>
                     <th class="py-3 px-4">Status Stok</th>
+                    <th class="py-3 px-4">Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -29,7 +36,6 @@
                 <tr class="border-b hover:bg-gray-50 transition">
                     <td class="py-3 px-4 font-bold text-gray-800">{{ $item->name }}</td>
                     
-                    <!-- Warna teks akan otomatis merah jika stok di bawah batas minimal -->
                     <td class="py-3 px-4 font-bold text-lg {{ $item->stock <= $item->min_stock ? 'text-red-600' : 'text-green-600' }}">
                         {{ $item->stock }}
                     </td>
@@ -44,12 +50,19 @@
                             <span class="bg-green-100 text-green-700 px-2 py-1 rounded font-bold text-xs uppercase">Aman</span>
                         @endif
                     </td>
+                    <td class="py-3 px-4">
+                        <form action="{{ route('ingredients.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus bahan ini?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="text-red-600 hover:underline font-medium">Hapus</button>
+                        </form>
+                    </td>
                 </tr>
                 @endforeach
                 
                 @if($ingredients->isEmpty())
                 <tr>
-                    <td colspan="6" class="py-6 text-center text-gray-500">Belum ada data bahan baku.</td>
+                    <td colspan="7" class="py-6 text-center text-gray-500">Belum ada data bahan baku.</td>
                 </tr>
                 @endif
             </tbody>

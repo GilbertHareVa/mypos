@@ -78,4 +78,25 @@ class PosController extends Controller
             'change' => $changeAmount
         ]);
     }
+public function receipt($invoice)
+    {
+        // 1. Ambil data transaksi beserta nama kasirnya
+        $transaction = DB::table('transactions')
+            ->join('users', 'transactions.user_id', '=', 'users.id')
+            ->select('transactions.*', 'users.name as kasir_name')
+            ->where('invoice_number', $invoice)
+            ->first();
+
+        if (!$transaction) {
+            return abort(404, 'Transaksi tidak ditemukan');
+        }
+
+        // 2. Ambil daftar menu yang dibeli di transaksi ini
+        $items = DB::table('transaction_items')->where('transaction_id', $transaction->id)->get();
+        
+        // 3. Ambil pengaturan cafe (Nama, Alamat, Tagline)
+        $settings = DB::table('settings')->pluck('value', 'key')->toArray();
+
+        return view('pos.receipt', compact('transaction', 'items', 'settings'));
+    }    
 }

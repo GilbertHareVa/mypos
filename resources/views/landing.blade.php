@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MyPOS Cafe</title>
+    <title>SeashellKitchen Cafe</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>body { font-family: 'Plus Jakarta Sans', sans-serif; }</style>
@@ -13,7 +13,7 @@
     <!-- Navbar -->
     <nav class="fixed w-full bg-white/90 backdrop-blur-sm shadow-sm z-50">
         <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-            <h1 class="text-2xl font-bold text-[#5c3d1e]">☕ MyPOS Cafe</h1>
+            <h1 class="text-2xl font-bold text-[#5c3d1e]">☕ SeashellKitchen Cafe</h1>
             <div class="hidden md:flex gap-6 font-medium text-gray-600">
                 <a href="#beranda" class="hover:text-[#5c3d1e] transition">Beranda</a>
                 <a href="#tentang" class="hover:text-[#5c3d1e] transition">Tentang Kami</a>
@@ -28,7 +28,7 @@
     <section id="beranda" class="pt-32 pb-20 px-4 bg-gradient-to-br from-[#5c3d1e] to-[#8a5a2b] text-center text-white">
         <div class="max-w-4xl mx-auto">
             <h2 class="text-5xl md:text-6xl font-bold mb-6">Secangkir Semangat<br>Setiap Hari</h2>
-            <p class="text-lg md:text-xl text-[#f5deb3] mb-10 max-w-2xl mx-auto">Nikmati sajian kopi terbaik dan hidangan lezat di MyPOS Cafe. Tempat yang nyaman untuk berkumpul, bekerja, atau sekadar bersantai.</p>
+            <p class="text-lg md:text-xl text-[#f5deb3] mb-10 max-w-2xl mx-auto">Nikmati sajian kopi terbaik dan hidangan lezat di SeashellKitchen Cafe. Tempat yang nyaman untuk berkumpul, bekerja, atau sekadar bersantai.</p>
             <a href="#menu" class="bg-[#f5deb3] text-[#5c3d1e] px-8 py-3 rounded-full font-bold text-lg hover:bg-white transition inline-block shadow-lg">Lihat Menu Kami</a>
         </div>
     </section>
@@ -36,7 +36,7 @@
     <!-- Menu Section -->
     <section id="menu" class="py-20 px-4 max-w-6xl mx-auto">
         <div class="text-center mb-12">
-            <h3 class="text-3xl font-bold text-[#5c3d1e] mb-4">Menu Favorit MyPOS</h3>
+            <h3 class="text-3xl font-bold text-[#5c3d1e] mb-4">Menu Favorit SeashellKitchen</h3>
             
             <!-- Filter Kategori (Fungsional dengan JavaScript nanti) -->
             <div class="flex flex-wrap justify-center gap-3 mt-8">
@@ -75,7 +75,7 @@
         <h3 class="text-2xl font-bold text-[#f5deb3] mb-4">Kunjungi Kami</h3>
         <p class="text-gray-300 mb-2">Jl. Kopi Harum No. 123, Jakarta</p>
         <p class="text-gray-300 mb-6">Buka Setiap Hari: 08:00 - 22:00</p>
-        <p class="text-gray-500 text-sm">© 2026 MyPOS Cafe. Dibuat dengan semangat.</p>
+        <p class="text-gray-500 text-sm">© 2026 SeashellKitchen Cafe. Dibuat dengan semangat.</p>
     </footer>
 
     <script>

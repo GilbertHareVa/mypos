@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - MyPOS</title>
+    <title>Login - SeashellKitchen</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -15,7 +15,7 @@
     <div class="flex w-full max-w-4xl bg-white shadow-xl rounded-2xl overflow-hidden">
         <!-- Panel Kiri (Dekoratif) -->
         <div class="hidden md:flex flex-col justify-center items-center w-1/2 bg-[#5c3d1e] text-[#f5deb3] p-10">
-            <h2 class="text-4xl font-bold mb-4">MyPOS</h2>
+            <h2 class="text-4xl font-bold mb-4">SeashellKitchen</h2>
             <p class="text-center mb-6 text-sm">Sistem Kasir & Inventaris Cerdas untuk Cafe Anda.</p>
             <div class="text-8xl">☕</div>
         </div>
@@ -48,8 +48,8 @@
             <div class="mt-8 border-t border-gray-200 pt-6">
                 <p class="text-xs text-gray-500 mb-3 text-center">Quick Login (Testing)</p>
                 <div class="flex gap-2">
-                    <button onclick="fillAndSubmit('admin@mypos.com', 'password')" class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm py-2 rounded font-medium transition">👑 Admin</button>
-                    <button onclick="fillAndSubmit('kasir@mypos.com', 'password')" class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm py-2 rounded font-medium transition">🧑‍💼 Kasir</button>
+                    <button onclick="fillAndSubmit('admin@SeashellKitchen.com', 'password')" class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm py-2 rounded font-medium transition">👑 Admin</button>
+                    <button onclick="fillAndSubmit('kasir@SeashellKitchen.com', 'password')" class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm py-2 rounded font-medium transition">🧑‍💼 Kasir</button>
                 </div>
             </div>
         </div>

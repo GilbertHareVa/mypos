@@ -18,6 +18,8 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/admin/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('admin.dashboard');
 // Halaman Data Transaksi
     Route::get('/admin/transactions', [\App\Http\Controllers\TransactionController::class, 'index'])->name('transactions.index');
+    // Halaman Laporan Penjualan
+    Route::get('/admin/reports', [\App\Http\Controllers\ReportController::class, 'index'])->name('reports.index');
     // Halaman Data Menu
     Route::get('/admin/menus', [\App\Http\Controllers\MenuController::class, 'index'])->name('menus.index');
     // Halaman Data Menu
@@ -34,14 +36,26 @@ Route::get('/admin/dashboard', [\App\Http\Controllers\DashboardController::class
     Route::delete('/admin/menus/{id}', [\App\Http\Controllers\MenuController::class, 'destroy'])->name('menus.destroy');
     // Halaman Data Karyawan (Users)
     Route::get('/admin/users', [\App\Http\Controllers\UserController::class, 'index'])->name('users.index');
+    // Halaman Data Karyawan (Users)
+    Route::get('/admin/users', [\App\Http\Controllers\UserController::class, 'index'])->name('users.index');
+    Route::get('/admin/users/create', [\App\Http\Controllers\UserController::class, 'create'])->name('users.create');
+    Route::post('/admin/users', [\App\Http\Controllers\UserController::class, 'store'])->name('users.store');
+    Route::delete('/admin/users/{id}', [\App\Http\Controllers\UserController::class, 'destroy'])->name('users.destroy');
     // Halaman Data Bahan Baku (Inventory)
     Route::get('/admin/ingredients', [\App\Http\Controllers\IngredientController::class, 'index'])->name('ingredients.index');
+    // Halaman Data Bahan Baku (Inventory)
+    Route::get('/admin/ingredients', [\App\Http\Controllers\IngredientController::class, 'index'])->name('ingredients.index');
+    Route::get('/admin/ingredients/create', [\App\Http\Controllers\IngredientController::class, 'create'])->name('ingredients.create');
+    Route::post('/admin/ingredients', [\App\Http\Controllers\IngredientController::class, 'store'])->name('ingredients.store');
+    Route::delete('/admin/ingredients/{id}', [\App\Http\Controllers\IngredientController::class, 'destroy'])->name('ingredients.destroy');
     // Halaman POS Kasir
 Route::get('/pos', [\App\Http\Controllers\PosController::class, 'index'])->name('pos.index');
 // Halaman POS Kasir
     Route::get('/pos', [\App\Http\Controllers\PosController::class, 'index'])->name('pos.index');
     Route::post('/pos/transaction/start', [\App\Http\Controllers\PosController::class, 'startTransaction']);
-    // Halaman Pengaturan Cafe & Printer
+    Route::post('/pos/transaction/start', [\App\Http\Controllers\PosController::class, 'startTransaction']);
+    Route::get('/pos/receipt/{invoice}', [\App\Http\Controllers\PosController::class, 'receipt'])->name('pos.receipt');
+// Halaman Pengaturan Cafe & Printer
     Route::get('/admin/settings', [\App\Http\Controllers\SettingController::class, 'index'])->name('settings.index');
     Route::post('/admin/settings', [\App\Http\Controllers\SettingController::class, 'update'])->name('settings.update');
     

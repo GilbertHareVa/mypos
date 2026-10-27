@@ -15,11 +15,11 @@ class DatabaseSeeder extends Seeder
 
         // 1. Buat 5 Users (1 Admin, 4 Kasir)
         DB::table('users')->insert([
-            ['name' => 'Admin Utama', 'email' => 'admin@mypos.com', 'password' => Hash::make('password'), 'role' => 'admin', 'is_active' => true, 'created_at' => $now, 'updated_at' => $now],
-            ['name' => 'Kasir Satu', 'email' => 'kasir@mypos.com', 'password' => Hash::make('password'), 'role' => 'kasir', 'is_active' => true, 'created_at' => $now, 'updated_at' => $now],
-            ['name' => 'Kasir Dua', 'email' => 'kasir2@mypos.com', 'password' => Hash::make('password'), 'role' => 'kasir', 'is_active' => true, 'created_at' => $now, 'updated_at' => $now],
-            ['name' => 'Kasir Tiga', 'email' => 'kasir3@mypos.com', 'password' => Hash::make('password'), 'role' => 'kasir', 'is_active' => true, 'created_at' => $now, 'updated_at' => $now],
-            ['name' => 'Kasir Empat', 'email' => 'kasir4@mypos.com', 'password' => Hash::make('password'), 'role' => 'kasir', 'is_active' => false, 'created_at' => $now, 'updated_at' => $now],
+            ['name' => 'Admin Utama', 'email' => 'admin@SeashellKitchen.com', 'password' => Hash::make('password'), 'role' => 'admin', 'is_active' => true, 'created_at' => $now, 'updated_at' => $now],
+            ['name' => 'Kasir Satu', 'email' => 'kasir@SeashellKitchen.com', 'password' => Hash::make('password'), 'role' => 'kasir', 'is_active' => true, 'created_at' => $now, 'updated_at' => $now],
+            ['name' => 'Kasir Dua', 'email' => 'kasir2@SeashellKitchen.com', 'password' => Hash::make('password'), 'role' => 'kasir', 'is_active' => true, 'created_at' => $now, 'updated_at' => $now],
+            ['name' => 'Kasir Tiga', 'email' => 'kasir3@SeashellKitchen.com', 'password' => Hash::make('password'), 'role' => 'kasir', 'is_active' => true, 'created_at' => $now, 'updated_at' => $now],
+            ['name' => 'Kasir Empat', 'email' => 'kasir4@SeashellKitchen.com', 'password' => Hash::make('password'), 'role' => 'kasir', 'is_active' => false, 'created_at' => $now, 'updated_at' => $now],
         ]);
 
         // 2. Buat 7 Kategori
@@ -65,7 +65,7 @@ class DatabaseSeeder extends Seeder
 
         // 5. Pengaturan Dasar Cafe
         DB::table('settings')->insert([
-            ['key' => 'cafe_name', 'value' => 'MyPOS Cafe', 'created_at' => $now, 'updated_at' => $now],
+            ['key' => 'cafe_name', 'value' => 'SeashellKitchen Cafe', 'created_at' => $now, 'updated_at' => $now],
             ['key' => 'cafe_address', 'value' => 'Jl. Kopi Harum No. 123, Jakarta', 'created_at' => $now, 'updated_at' => $now],
             ['key' => 'cafe_phone', 'value' => '081234567890', 'created_at' => $now, 'updated_at' => $now],
             ['key' => 'tax_percentage', 'value' => '10', 'created_at' => $now, 'updated_at' => $now],

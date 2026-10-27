@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>POS Kasir - MyPOS</title>
+    <title>POS Kasir - SeashellKitchen</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -13,7 +13,7 @@
     
     <!-- Topbar Kasir Tipis -->
     <header class="bg-[#5c3d1e] text-white px-4 py-2 flex justify-between items-center text-sm shadow-md">
-        <div class="font-bold text-lg">☕ MyPOS Kasir</div>
+        <div class="font-bold text-lg">☕ SeashellKitchen Kasir</div>
         <div class="flex items-center gap-4">
             <span id="clock" class="text-[#f5deb3]"></span>
             <span class="bg-[#4a3118] px-3 py-1 rounded-full">👤 {{ auth()->user()->name }}</span>
@@ -265,14 +265,21 @@
             })
             .then(response => response.json())
             .then(data => {
-                if(data.success) {
+          if(data.success) {
                     Swal.fire({
                         icon: 'success',
                         title: 'Transaksi Berhasil!',
                         html: `No. Struk: <b>${data.invoice}</b><br>Kembalian: <b>${formatRupiah(data.change)}</b>`,
                         confirmButtonColor: '#5c3d1e',
-                        confirmButtonText: 'Selesai & Tutup'
-                    }).then(() => {
+                        confirmButtonText: 'Selesai',
+                        showDenyButton: true,
+                        denyButtonText: '🖨️ Cetak Struk',
+                        denyButtonColor: '#4b5563'
+                    }).then((result) => {
+                        if (result.isDenied) {
+                            // Membuka struk di tab/jendela baru
+                            window.open('/pos/receipt/' + data.invoice, '_blank', 'width=400,height=600');
+                        }
                         cart = []; 
                         updateCartUI(); 
                         closeCheckout(); 
