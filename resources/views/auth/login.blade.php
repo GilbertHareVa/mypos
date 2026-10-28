@@ -17,7 +17,7 @@
         <div class="hidden md:flex flex-col justify-center items-center w-1/2 bg-[#5c3d1e] text-[#f5deb3] p-10">
             <h2 class="text-4xl font-bold mb-4">SeashellKitchen</h2>
             <p class="text-center mb-6 text-sm">Sistem Kasir & Inventaris Cerdas untuk Cafe Anda.</p>
-            <div class="text-8xl">☕</div>
+            <div class="text-8xl"></div>
         </div>
 
         <!-- Panel Kanan (Form) -->

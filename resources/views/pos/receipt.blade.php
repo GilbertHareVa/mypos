@@ -2,85 +2,87 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Struk - {{ $transaction->invoice_number }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Struk #{{ $transaction->invoice_number }}</title>
     <style>
-        /* CSS Khusus Printer Thermal (Kertas Kecil) */
-        body { font-family: 'Courier New', Courier, monospace; width: 300px; margin: 0 auto; color: #000; font-size: 14px; background: #fff; padding: 20px; }
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 12px;
+            width: 58mm;
+            margin: 0 auto;
+            padding: 8px;
+            color: #000;
+        }
         .text-center { text-align: center; }
+        .text-right { text-align: right; }
         .font-bold { font-weight: bold; }
-        .border-dashed { border-bottom: 1px dashed #000; margin: 10px 0; }
-        .flex-between { display: flex; justify-content: space-between; }
-        .mb-1 { margin-bottom: 4px; }
-        .mt-2 { margin-top: 8px; }
-        
-        /* Hilangkan elemen yang tidak perlu saat di-print fisik */
+        .border-dashed { border-bottom: 1px dashed #000; margin: 6px 0; }
+        .flex { display: flex; justify-content: space-between; }
         @media print {
+            body { width: 100%; padding: 0; }
             @page { margin: 0; }
-            body { margin: 10px; width: 100%; padding: 0; }
-            .no-print { display: none; }
         }
     </style>
 </head>
-<body onload="window.print()"> <!-- Script otomatis membuka layar Print -->
-    
-    <div class="text-center font-bold" style="font-size: 18px;">{{ $settings['cafe_name'] ?? 'SeashellKitchen Cafe' }}</div>
-    <div class="text-center" style="font-size: 12px;">{{ $settings['cafe_address'] ?? '' }}</div>
-    <div class="text-center" style="font-size: 12px;">Telp: {{ $settings['cafe_phone'] ?? '' }}</div>
-    
-    <div class="border-dashed"></div>
-    
-    <div class="flex-between mb-1" style="font-size: 12px;">
-        <span>{{ $transaction->invoice_number }}</span>
-        <span>{{ \Carbon\Carbon::parse($transaction->created_at)->format('d/m/Y H:i') }}</span>
+<body onload="window.print()">
+
+    <!-- Header Struk -->
+    <div class="text-center">
+        <h3 style="margin: 0; font-size: 15px;" class="font-bold">{{ $setting->store_name ?? 'SeashellKitchen' }}</h3>
+        <p style="margin: 2px 0;">{{ $setting->address ?? '' }}</p>
+        @if(!empty($setting->phone))
+            <p style="margin: 2px 0;">Telp/WA: {{ $setting->phone }}</p>
+        @endif
     </div>
-    <div style="font-size: 12px;">Kasir: {{ $transaction->kasir_name }}</div>
-    
+
     <div class="border-dashed"></div>
 
-    <!-- Daftar Pesanan -->
-    @foreach($items as $item)
-    <div class="mb-1">
-        <div>{{ $item->menu_name }}</div>
-        <div class="flex-between">
-            <span>{{ $item->quantity }} x {{ number_format($item->price, 0, ',', '.') }}</span>
-            <span>{{ number_format($item->subtotal, 0, ',', '.') }}</span>
+    <!-- Info Transaksi -->
+    <div>
+        <p style="margin: 2px 0;">No : {{ $transaction->invoice_number }}</p>
+        <p style="margin: 2px 0;">Tgl: {{ date('d/m/Y H:i', strtotime($transaction->created_at ?? now())) }}</p>
+    </div>
+
+    <div class="border-dashed"></div>
+
+   <!-- Item Pesanan -->
+    <div style="margin-bottom: 4px;">
+        @foreach($items as $item)
+            <div style="margin-bottom: 4px;">
+                <div>{{ data_get($item, 'item_name') ?? data_get($item, 'menu_name') ?? data_get($item, 'name') ?? 'Menu' }}</div>
+                <div class="flex">
+                    <span>{{ $item->quantity }} x {{ number_format($item->price, 0, ',', '.') }}</span>
+                    <span>{{ number_format(data_get($item, 'subtotal', $item->quantity * $item->price), 0, ',', '.') }}</span>
+                </div>
+            </div>
+        @endforeach
+    </div>
+
+    <div class="border-dashed"></div>
+
+    <!-- Rincian Pembayaran -->
+    <div class="flex font-bold" style="font-size: 13px;">
+        <span>TOTAL</span>
+        <span>Rp {{ number_format($transaction->total_amount ?? $transaction->total, 0, ',', '.') }}</span>
+    </div>
+
+    @if(isset($transaction->pay_amount) && $transaction->pay_amount > 0)
+        <div class="flex" style="margin-top: 2px;">
+            <span>Bayar</span>
+            <span>Rp {{ number_format($transaction->pay_amount, 0, ',', '.') }}</span>
         </div>
-    </div>
-    @endforeach
+        <div class="flex">
+            <span>Kembali</span>
+            <span>Rp {{ number_format($transaction->change_amount ?? ($transaction->pay_amount - ($transaction->total_amount ?? $transaction->total)), 0, ',', '.') }}</span>
+        </div>
+    @endif
 
     <div class="border-dashed"></div>
 
-    <!-- Ringkasan Harga -->
-    <div class="flex-between mb-1 font-bold">
-        <span>Subtotal:</span>
-        <span>{{ number_format($transaction->subtotal, 0, ',', '.') }}</span>
-    </div>
-    <div class="flex-between mb-1 font-bold">
-        <span>Pajak ({{ $settings['tax_percentage'] ?? 10 }}%):</span>
-        <span>{{ number_format($transaction->tax, 0, ',', '.') }}</span>
-    </div>
-    <div class="flex-between mb-1 font-bold" style="font-size: 16px;">
-        <span>Total:</span>
-        <span>{{ number_format($transaction->total, 0, ',', '.') }}</span>
-    </div>
-    
-    <div class="border-dashed"></div>
-    
-    <!-- Pembayaran -->
-    <div class="flex-between mb-1">
-        <span>Tunai:</span>
-        <span>{{ number_format($transaction->paid_amount, 0, ',', '.') }}</span>
-    </div>
-    <div class="flex-between mb-1">
-        <span>Kembali:</span>
-        <span>{{ number_format($transaction->change_amount, 0, ',', '.') }}</span>
+    <!-- Footer Struk -->
+    <div class="text-center" style="margin-top: 10px;">
+        <p style="margin: 0; font-style: italic;">{{ $setting->receipt_footer ?? 'Terima kasih atas kunjungan Anda!' }}</p>
     </div>
 
-    <div class="border-dashed mt-2"></div>
-    
-    <!-- Pesan Penutup -->
-    <div class="text-center font-bold mt-2" style="font-size: 12px;">{{ $settings['cafe_tagline'] ?? 'Terima Kasih!' }}</div>
-    
-    <button class="no-print" onclick="window.print()" style="margin-top: 20px; width: 100%; padding: 10px; cursor: pointer; background: #5c3d1e; color: white; border: none; font-weight: bold; border-radius: 5px;">Cetak Ulang</button>
 </body>
 </html>

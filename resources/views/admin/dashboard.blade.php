@@ -10,7 +10,6 @@
                 <p class="text-sm text-gray-500 font-medium mb-1">Pendapatan Hari Ini</p>
                 <h3 class="text-3xl font-bold text-[#5c3d1e]">Rp {{ number_format($todaySales, 0, ',', '.') }}</h3>
             </div>
-            <div class="text-5xl opacity-20">💰</div>
         </div>
         
         <!-- Kotak Statistik 2 -->
@@ -19,7 +18,6 @@
                 <p class="text-sm text-gray-500 font-medium mb-1">Transaksi Sukses</p>
                 <h3 class="text-3xl font-bold text-[#5c3d1e]">{{ $todayTransactions }} <span class="text-lg">Order</span></h3>
             </div>
-            <div class="text-5xl opacity-20">🧾</div>
         </div>
         
         <!-- Kotak Statistik 3 -->
@@ -32,13 +30,12 @@
                     <h3 class="text-3xl font-bold text-green-500">Aman</h3>
                 @endif
             </div>
-            <div class="text-5xl opacity-20">⚠️</div>
         </div>
     </div>
 
     <!-- Area Menu Terlaris -->
     <div class="bg-white p-6 rounded-xl border border-[#f5deb3] shadow-sm max-w-2xl">
-        <h3 class="text-lg font-bold text-gray-800 mb-4">🏆 Menu Terlaris Sepanjang Masa</h3>
+        <h3 class="text-lg font-bold text-gray-800 mb-4">Menu Terlaris</h3>
         @if($topMenus->isEmpty())
             <p class="text-gray-500 text-sm">Belum ada data penjualan.</p>
         @else

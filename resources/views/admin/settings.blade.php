@@ -1,64 +1,52 @@
 @extends('layouts.admin')
 
-@section('title', 'Pengaturan Sistem & Struk')
+@section('title', 'Pengaturan Restoran')
 
 @section('content')
-<div class="max-w-4xl">
-    
+<div class="max-w-3xl space-y-6">
+
     @if(session('success'))
-        <div class="bg-green-100 text-green-700 p-4 rounded-xl mb-6 font-bold border border-green-200">
+        <div class="bg-emerald-50 border border-emerald-200 text-emerald-800 p-4 rounded-2xl font-semibold text-sm">
             ✅ {{ session('success') }}
         </div>
     @endif
 
-    <form action="{{ route('settings.update') }}" method="POST" class="space-y-6">
-        @csrf
-        
-        <!-- Bagian 1: Profil Cafe -->
-        <div class="bg-white p-6 rounded-xl border border-[#f5deb3] shadow-sm">
-            <h3 class="text-lg font-bold text-[#5c3d1e] mb-4 border-b border-gray-100 pb-2">🏠 Profil Restoran / Cafe</h3>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Nama Bisnis</label>
-                    <input type="text" name="cafe_name" value="{{ $settings['cafe_name'] ?? '' }}" required class="w-full border border-gray-300 rounded-lg p-3 focus:border-[#5c3d1e] outline-none">
-                </div>
-                <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Nomor Telepon (WhatsApp)</label>
-                    <input type="text" name="cafe_phone" value="{{ $settings['cafe_phone'] ?? '' }}" required class="w-full border border-gray-300 rounded-lg p-3 focus:border-[#5c3d1e] outline-none">
-                </div>
-                <div class="md:col-span-2">
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Alamat Lengkap</label>
-                    <textarea name="cafe_address" required rows="2" class="w-full border border-gray-300 rounded-lg p-3 focus:border-[#5c3d1e] outline-none">{{ $settings['cafe_address'] ?? '' }}</textarea>
-                </div>
-            </div>
+    <div class="bg-white p-8 rounded-3xl border border-gray-200/80 shadow-2xs">
+        <div class="mb-6 border-b border-gray-100 pb-4">
+            <h3 class="text-xl font-extrabold text-gray-900">Identitas & Informasi Kafe</h3>
+            <p class="text-sm text-gray-500 mt-1">Informasi ini akan ditampilkan di Landing Page dan Struk Kasir.</p>
         </div>
 
-        <!-- Bagian 2: Pajak & Struk -->
-        <div class="bg-white p-6 rounded-xl border border-[#f5deb3] shadow-sm">
-            <h3 class="text-lg font-bold text-[#5c3d1e] mb-4 border-b border-gray-100 pb-2">🖨️ Pengaturan Struk & Pajak</h3>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Pajak / PPN (%)</label>
-                    <input type="number" name="tax_percentage" value="{{ $settings['tax_percentage'] ?? '10' }}" required min="0" max="100" class="w-full border border-gray-300 rounded-lg p-3 focus:border-[#5c3d1e] outline-none">
-                    <p class="text-xs text-gray-500 mt-1">Sistem kasir akan menghitung pajak otomatis berdasarkan angka ini.</p>
-                </div>
-                <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-1">Pesan Penutup di Struk (Tagline)</label>
-                    <input type="text" name="cafe_tagline" value="{{ $settings['cafe_tagline'] ?? '' }}" required class="w-full border border-gray-300 rounded-lg p-3 focus:border-[#5c3d1e] outline-none">
-                    <p class="text-xs text-gray-500 mt-1">Contoh: "Terima kasih atas kunjungannya!"</p>
-                </div>
-            </div>
-        </div>
+        <form action="{{ route('settings.update') }}" method="POST" class="space-y-6">
+            @csrf
 
-        <!-- Tombol Simpan -->
-        <div class="flex justify-end">
-            <button type="submit" class="bg-[#5c3d1e] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#4a3118] shadow-lg transition active:scale-95 text-lg">
-                💾 Simpan Semua Pengaturan
-            </button>
-        </div>
-    </form>
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-2">Nama Bisnis / Restoran</label>
+                <input type="text" name="store_name" value="{{ old('store_name', $setting->store_name ?? 'SeashellKitchen') }}" required placeholder="Contoh: SeashellKitchen" class="w-full border border-gray-200 rounded-2xl p-3.5 focus:border-[#2c1810] outline-none text-sm font-medium">
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-2">Alamat Lengkap</label>
+                <textarea name="address" rows="3" placeholder="Contoh: Jl. Pantai Indah No. 88, Jakarta Utara" class="w-full border border-gray-200 rounded-2xl p-3.5 focus:border-[#2c1810] outline-none text-sm font-medium">{{ old('address', $setting->address ?? '') }}</textarea>
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-2">No. Telepon / WhatsApp</label>
+                <input type="text" name="phone" value="{{ old('phone', $setting->phone ?? '') }}" placeholder="Contoh: 0812-3456-7890" class="w-full border border-gray-200 rounded-2xl p-3.5 focus:border-[#2c1810] outline-none text-sm font-medium">
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-2">Pesan Footer Struk (Catatan Bawah Struk)</label>
+                <input type="text" name="receipt_footer" value="{{ old('receipt_footer', $setting->receipt_footer ?? '') }}" placeholder="Contoh: Terima kasih atas kunjungan Anda! Sampai jumpa kembali." class="w-full border border-gray-200 rounded-2xl p-3.5 focus:border-[#2c1810] outline-none text-sm font-medium">
+            </div>
+
+            <div class="pt-4">
+                <button type="submit" class="bg-[#2c1810] hover:bg-[#3d2319] text-white px-8 py-3.5 rounded-2xl font-extrabold text-sm shadow-md transition active:scale-95">
+                    💾 Simpan Semua Pengaturan
+                </button>
+            </div>
+        </form>
+    </div>
 
 </div>
 @endsection

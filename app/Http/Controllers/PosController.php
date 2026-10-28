@@ -94,9 +94,22 @@ public function receipt($invoice)
         // 2. Ambil daftar menu yang dibeli di transaksi ini
         $items = DB::table('transaction_items')->where('transaction_id', $transaction->id)->get();
         
-        // 3. Ambil pengaturan cafe (Nama, Alamat, Tagline)
-        $settings = DB::table('settings')->pluck('value', 'key')->toArray();
+        // 3. Ambil pengaturan cafe (Nama, Alamat, Footer Struk)
+        $setting = DB::table('settings')->first();
 
-        return view('pos.receipt', compact('transaction', 'items', 'settings'));
-    }    
-}
+        return view('pos.receipt', compact('transaction', 'items', 'setting'));
+
+return view('pos.receipt', compact('transaction', 'items', 'setting'));
+    } // <-- Tambahkan tanda kurung kurawal ini untuk menutup fungsi sebelumnya
+
+    public function history()
+    {
+        // Mengambil transaksi yang dibuat HARI INI saja
+        $transactions = \Illuminate\Support\Facades\DB::table('transactions')
+            ->whereDate('created_at', \Carbon\Carbon::today())
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('pos.history', compact('transactions'));
+    }
+}   

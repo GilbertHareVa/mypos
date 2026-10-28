@@ -2,55 +2,64 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Carbon\Carbon;
 
 class UserController extends Controller
 {
     public function index()
     {
-        $users = DB::table('users')->orderBy('role')->get();
+        $users = User::all();
         return view('admin.users', compact('users'));
-    }
-
-    public function create()
-    {
-        return view('admin.user_create');
     }
 
     public function store(Request $request)
     {
-        // Validasi data (Perhatikan in:admin,kasir)
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users',
+            'email' => 'required|email|unique:users,email',
+            'role' => 'required|in:admin,kasir',
             'password' => 'required|min:6',
-            'role' => 'required|in:admin,kasir' 
         ]);
 
-        // Simpan ke database
-        DB::table('users')->insert([
+        User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
             'role' => $request->role,
-            'is_active' => true,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
+            'password' => bcrypt($request->password),
         ]);
 
-        return redirect()->route('users.index')->with('success', 'Akun karyawan baru berhasil dibuat!');
+        return redirect()->back()->with('success', 'Karyawan berhasil ditambahkan!');
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,'.$id,
+            'role' => 'required|in:admin,kasir',
+            'password' => 'nullable|min:6',
+        ]);
+
+        $user = User::findOrFail($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->role = $request->role;
+
+        if ($request->filled('password')) {
+            $user->password = bcrypt($request->password);
+        }
+
+        $user->save();
+
+        return redirect()->back()->with('success', 'Data karyawan berhasil diperbarui!');
     }
 
     public function destroy($id)
     {
-        if (auth()->id() == $id) {
-            return redirect()->route('users.index')->with('error', 'Anda tidak bisa menghapus akun Anda sendiri!');
-        }
+        $user = User::findOrFail($id);
+        $user->delete();
 
-        DB::table('users')->where('id', $id)->delete();
-        return redirect()->route('users.index')->with('success', 'Akun karyawan berhasil dihapus secara permanen!');
+        return redirect()->back()->with('success', 'Karyawan berhasil dihapus!');
     }
 }
